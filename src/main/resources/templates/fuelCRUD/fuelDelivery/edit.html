@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Поставки топлива</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+          integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+          crossorigin="anonymous"></script>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header th:insert="blocks/header :: header"></header>
+<form th:action="@{/fuel/delivery/edit/accept}" method="post" th:object="${FuelDelivery}" class="container md-12" enctype="multipart/form-data">
+  <h1 class="h3 mb-3 fw-normal">Поставка топлива</h1>
+  <div class="form-floating">
+    <input type="date" class="form-control" name="name" th:field="*{deliverydate}" id="floatingInput" placeholder="Дата выполнения заказа">
+    <label for="floatingInput">Дата</label>
+  </div>
+  <div class="form-floating">
+    <input type="text" class="form-control" name="capacity" th:field="*{price}" id="floatingInput" placeholder="Дата выполнения заказа">
+    <label for="floatingInput">Цена за литр</label>
+  </div>
+  <div class="form-floating">
+    <select th:field="*{fuelType}" id="floatingInput" class="form-control">
+      <option th:each="type : ${FuelTypes}"
+              th:value="${type.getId()}"
+              th:text="${type.getName()}">
+      </option>
+    </select>
+  </div>
+  <input type="hidden" name="id" th:field="*{id}">
+  <button class="w-100 btn btn-lg btn-primary" type="submit">Подтвердить</button>
+</form>
+<footer class="mt-auto" th:insert="blocks/footer :: footer"></footer>
+</body>
+</html>

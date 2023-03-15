@@ -1,0 +1,23 @@
+<header class="p-3 bg-dark text-white" th:fragment="header"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
+                <li><a href="/driver" class="nav-link px-2 text-white">Водители</a></li>
+                <li><a href="/fuel" class="nav-link px-2 text-white">Топливо</a></li>
+                <li><a href="/fuel/usage" class="nav-link px-2 text-white">Расход ГСМ</a></li>
+                <li><a href="/vehicle/menu" class="nav-link px-2 text-white">Транспортные средства</a></li>
+            </ul>
+
+        </div>
+    </div>
+</header>

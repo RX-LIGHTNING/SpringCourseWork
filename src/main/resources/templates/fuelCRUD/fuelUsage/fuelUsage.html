@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Потребление топлива</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+  </script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">
+  </script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js">
+  </script>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container">
+  <a th:href="${'/fuel/usage/add'}" class="btn btn-primary">Добавить доставку топлива</a>
+  <table class="table table-hover" id="sortTable">
+    <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Транспорт</th>
+      <th scope="col">Тип топлива</th>
+      <th scope="col">Водитель</th>
+      <th scope="col">Дата траты</th>
+      <th scope="col">Объем потребления</th>
+      <th scope="col">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="el : ${usages}">
+      <th th:text="${el.getId()}" scope="row"></th>
+      <td th:text="${el.getVehicle().getModel()}"></td>
+      <td th:text="${el.getFuelType().getName()}"></td>
+      <td th:text="${el.getDriver().getName()}"></td>
+      <td th:text="${el.getUsagedate()}"></td>
+      <td th:text="${el.getUsageamount()}"></td>
+      <td>
+        <a th:href="${'/fuel/usage/delete?id='+el.getId()}" class="btn btn-primary">Удалить</a>
+        <a th:href="${'/fuel/usage/edit?id='+el.getId()}" class="btn btn-primary">Редактировать</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <script>
+    $('#sortTable').DataTable();
+  </script>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<footer class="mt-auto" th:insert="blocks/footer :: header"></footer>
+</body>
+</html>
