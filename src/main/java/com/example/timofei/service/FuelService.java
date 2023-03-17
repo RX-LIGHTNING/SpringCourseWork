@@ -8,12 +8,13 @@ import com.example.timofei.repository.FuelDeliveryRepo;
 import com.example.timofei.repository.FuelTypeRepo;
 import com.example.timofei.repository.FuelUsageRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 @Service
 @RequiredArgsConstructor
 public class FuelService {
-
     private final FuelTypeRepo fuelTypeRepo;
     private final FuelDeliveryRepo fuelDeliveryRepo;
     private final FuelUsageRepo fuelUsageRepo;
@@ -42,6 +43,8 @@ public class FuelService {
     }
 
     public void saveDelivery(FuelDelivery fuelDelivery){
+        FuelType temp = fuelDelivery.getFuelType();
+        temp.setCapacity((int) (temp.getCapacity()+fuelDelivery.getQuantity()));
         fuelDeliveryRepo.save(fuelDelivery);
     }
 
@@ -58,6 +61,8 @@ public class FuelService {
         return fuelUsageRepo.findById(id).get();
     }
     public void saveUsage(FuelUsage fuelUsage){
+        FuelType temp = fuelUsage.getFuelType();
+        temp.setCapacity((int) (temp.getCapacity()-fuelUsage.getUsageamount()));
         fuelUsageRepo.save(fuelUsage);
     }
     public void deleteUsage(Long id){

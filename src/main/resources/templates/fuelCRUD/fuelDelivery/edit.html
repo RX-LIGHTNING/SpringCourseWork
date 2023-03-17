@@ -25,6 +25,10 @@
     <label for="floatingInput">Цена за литр</label>
   </div>
   <div class="form-floating">
+    <input type="text" class="form-control" name="capacity" th:field="*{quantity}" id="floatingInput" placeholder="Дата выполнения заказа">
+    <label for="floatingInput">Количество</label>
+  </div>
+  <div class="form-floating">
     <select th:field="*{fuelType}" id="floatingInput" class="form-control">
       <option th:each="type : ${FuelTypes}"
               th:value="${type.getId()}"

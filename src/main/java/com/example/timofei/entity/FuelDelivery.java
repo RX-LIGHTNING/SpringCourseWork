@@ -14,6 +14,7 @@ public class FuelDelivery {
     private Long id;
     private Date deliverydate;
     private Double price;
+    private Double quantity;
     @OneToOne
     private FuelType fuelType;
 }

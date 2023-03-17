@@ -28,6 +28,7 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Дата поставки</th>
+      <th scope="col">Количество</th>
       <th scope="col">Цена за литр</th>
       <th scope="col">Тип топлива</th>
       <th scope="col">Действия</th>
@@ -37,6 +38,7 @@
     <tr th:each="el : ${deliveries}">
       <th th:text="${el.getId()}" scope="row"></th>
       <td th:text="${el.getDeliverydate()}"></td>
+      <td th:text="${el.getQuantity()}"></td>
       <td th:text="${el.getPrice()}"></td>
       <td th:text="${el.getFuelType().getName()}"></td>
       <td>
