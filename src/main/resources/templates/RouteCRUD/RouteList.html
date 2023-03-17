@@ -22,7 +22,7 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container">
-    <a th:href="${'/route/add'}" class="btn btn-primary">Добавить транспортное средство</a>
+    <a th:href="${'/route/add'}" class="btn btn-primary">Добавить путевой лист</a>
     <table class="table table-hover" id="sortTable">
         <thead>
         <tr>
@@ -38,13 +38,13 @@
         <tr th:each="el : ${routes}">
             <th th:text="${el.getId()}" scope="row"></th>
             <td th:text="${el.getDriver().getName()}"></td>
-            <td th:text="${el.getFrom()}"></td>
+            <td th:text="${el.getStart()}"></td>
             <td th:text="${el.getDestination()}"></td>
             <td th:text="${el.getVehicle().getModel()}"></td>
             <td>
                 <a th:href="${'/route/delete?id='+el.getId()}" class="btn btn-primary">Удалить</a>
                 <a th:href="${'/route/edit?id='+el.getId()}" class="btn btn-primary">Редактировать</a>
-                <a class="btn btn-primary">Тех. паспорт</a>
+                <a class="btn btn-primary">Путевой лист</a>
             </td>
         </tr>
         </tbody>

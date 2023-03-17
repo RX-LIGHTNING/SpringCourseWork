@@ -12,7 +12,7 @@ public class RouteList {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String from;
+    private String start;
     private String destination;
 
     @OneToOne
