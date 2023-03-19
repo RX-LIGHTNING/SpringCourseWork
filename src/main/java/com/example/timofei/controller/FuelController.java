@@ -1,19 +1,25 @@
 package com.example.timofei.controller;
 
-import com.example.timofei.entity.Driver;
-import com.example.timofei.entity.FuelDelivery;
-import com.example.timofei.entity.FuelType;
-import com.example.timofei.entity.FuelUsage;
+import com.example.timofei.entity.*;
 import com.example.timofei.service.DriverService;
 import com.example.timofei.service.FuelService;
+import com.example.timofei.service.RouteListService;
 import com.example.timofei.service.VehicleService;
+import com.example.timofei.utils.WordHelper;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +28,8 @@ public class FuelController {
     private final FuelService fuelService;
     private final VehicleService vehicleService;
     private final DriverService driverService;
+
+    private final RouteListService routeListService;
 
     @GetMapping("/fuel")
     public String getFuelMenu(Model model){
@@ -67,6 +75,7 @@ public class FuelController {
         model.addAttribute("FuelTypes", fuelService.findAllTypes());
         model.addAttribute("Vehicles", vehicleService.findAllVehicles());
         model.addAttribute("Drivers", driverService.findAll());
+        model.addAttribute("Routes", routeListService.findAll());
         return "fuelCRUD/fuelUsage/edit";
     }
     @GetMapping("/fuel/usage/delete")
@@ -80,6 +89,7 @@ public class FuelController {
         model.addAttribute("FuelTypes", fuelService.findAllTypes());
         model.addAttribute("Vehicles", vehicleService.findAllVehicles());
         model.addAttribute("Drivers", driverService.findAll());
+        model.addAttribute("Routes", routeListService.findAll());
         return "fuelCRUD/fuelUsage/edit";
     }
     @PostMapping("/fuel/usage/edit/accept")
@@ -87,6 +97,16 @@ public class FuelController {
     {
         fuelService.saveUsage(fuelUsage);
         return "redirect:/fuel/usage";
+    }
+    @GetMapping(value = "/fuel/usage/word", produces = "application/vnd.openxmlformats-"
+            + "officedocument.wordprocessingml.document")
+    public ResponseEntity<InputStreamResource> fuelUsage(Model model, @RequestParam(name="id", required = true)long id ) throws IOException, InvalidFormatException {
+        ByteArrayInputStream bis = WordHelper.generateUsage(fuelService.findUsageById(id));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition",
+                "inline; filename=mydoc.docx");
+        return ResponseEntity.ok().headers(headers).
+                body(new InputStreamResource(bis));
     }
     //----------------------------
     @GetMapping("/fuel/delivery")

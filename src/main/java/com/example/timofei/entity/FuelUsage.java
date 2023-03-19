@@ -18,6 +18,8 @@ public class FuelUsage {
     private FuelType fuelType;
     @OneToOne
     private Driver driver;
+    @OneToOne
+    private RouteList routeList;
     private Date usagedate;
     private Double usageamount;
 }

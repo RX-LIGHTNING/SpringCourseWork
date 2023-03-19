@@ -29,6 +29,7 @@
       <th scope="col">ID</th>
       <th scope="col">Транспорт</th>
       <th scope="col">Тип топлива</th>
+      <th scope="col">Путевой лист</th>
       <th scope="col">Водитель</th>
       <th scope="col">Дата траты</th>
       <th scope="col">Объем потребления</th>
@@ -40,13 +41,14 @@
       <th th:text="${el.getId()}" scope="row"></th>
       <td th:text="${el.getVehicle().getModel()}"></td>
       <td th:text="${el.getFuelType().getName()}"></td>
+      <td th:text="${'Путевой лист: '+el.getRouteList().getId()}"></td>
       <td th:text="${el.getDriver().getName()}"></td>
       <td th:text="${el.getUsagedate()}"></td>
       <td th:text="${el.getUsageamount()}"></td>
       <td>
         <a th:href="${'/fuel/usage/delete?id='+el.getId()}" class="btn btn-primary">Удалить</a>
         <a th:href="${'/fuel/usage/edit?id='+el.getId()}" class="btn btn-primary">Редактировать</a>
-        <a class="btn btn-primary">Акт списания</a>
+        <a th:href="${'/fuel/usage/word?id='+el.getId()}" class="btn btn-primary">Акт списания</a>
       </td>
     </tr>
     </tbody>
