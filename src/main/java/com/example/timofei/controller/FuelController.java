@@ -137,4 +137,14 @@ public class FuelController {
         fuelService.saveDelivery(fuelDelivery);
         return "redirect:/fuel/delivery";
     }
+    @GetMapping(value = "/fuel/delivery/word", produces = "application/vnd.openxmlformats-"
+            + "officedocument.wordprocessingml.document")
+    public ResponseEntity<InputStreamResource> fuelDelivery(Model model, @RequestParam(name="id", required = true)long id ) throws IOException, InvalidFormatException {
+        ByteArrayInputStream bis = WordHelper.generateDelivery(fuelService.findDeliveryById(id));
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition",
+                "inline; filename=mydoc.docx");
+        return ResponseEntity.ok().headers(headers).
+                body(new InputStreamResource(bis));
+    }
 }
