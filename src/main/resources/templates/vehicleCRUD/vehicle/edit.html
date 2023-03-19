@@ -32,6 +32,11 @@
         <input type="text" class="form-control" name="capacity" th:field="*{enginecapacity}" id="floatingInput" placeholder="Дата выполнения заказа">
         <label for="floatingInput">Объем двигателя</label>
     </div>
+    <div class="form-floating">
+        Тех. паспорт
+        <input type="file" accept=".docx" class="form-control" name="capacity" th:field="*{document}" id="floatingInput" placeholder="Дата выполнения заказа">
+        <label for="floatingInput">Тех. паспорт</label>
+    </div>
     <input type="hidden" name="id" th:field="*{id}">
     <button class="w-100 btn btn-lg btn-primary" type="submit">Подтвердить</button>
 </form>

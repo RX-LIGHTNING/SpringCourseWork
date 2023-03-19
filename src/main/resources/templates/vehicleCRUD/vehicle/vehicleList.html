@@ -44,7 +44,7 @@
       <td>
         <a th:href="${'/vehicle/delete?id='+el.getId()}" class="btn btn-primary">Удалить</a>
         <a th:href="${'/vehicle/edit?id='+el.getId()}" class="btn btn-primary">Редактировать</a>
-        <a class="btn btn-primary">Тех. паспорт</a>
+        <a th:href="${'/vehicle/document?id='+el.getId()}" class="btn btn-primary">Тех. паспорт</a>
       </td>
     </tr>
     </tbody>

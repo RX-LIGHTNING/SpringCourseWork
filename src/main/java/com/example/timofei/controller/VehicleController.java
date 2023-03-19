@@ -7,6 +7,12 @@ import com.example.timofei.service.DriverService;
 import com.example.timofei.service.FuelService;
 import com.example.timofei.service.VehicleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +56,21 @@ public class VehicleController {
     {
         vehicleService.saveVehicle(vehicle);
         return "redirect:/vehicle";
+    }
+    @GetMapping("/vehicle/document")
+    public ResponseEntity<Resource> tripsDocument(Model model, @RequestParam(name="id", required = true)long id){
+        byte[] array = vehicleService.findVehicleById(id).getDocument();
+
+        ByteArrayResource resource = new ByteArrayResource(array);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename("tehpassport.docx")
+                                .build().toString())
+                .body(resource);
+
     }
     //-----------------------------------------
     @GetMapping("/vehicle/consumption")
