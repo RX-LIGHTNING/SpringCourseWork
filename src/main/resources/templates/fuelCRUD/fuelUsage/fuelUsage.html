@@ -23,6 +23,22 @@
 
 <div class="container">
   <a th:href="${'/fuel/usage/add'}" class="btn btn-primary">Добавить доставку топлива</a>
+  <form th:action="@{/fuel/usage/between}" method="post" class="container md-12" enctype="multipart/form-data">
+    <h1 class="h3 mb-3 fw-normal">С какого периода</h1>
+    <input type="date" class="form-control" value="2023-03-20" name="start" id="floatingInput" placeholder="mail">
+    <h1 class="h3 mb-3 fw-normal">По какой период</h1>
+    <input type="date" class="form-control" value="2023-03-21" name="end" id="floatingInput" placeholder="mail">
+    <div class="form-floating">
+      Водитель
+      <select name="driver" id="floatingInput" class="form-control">
+        <option th:each="type : ${Drivers}"
+                th:value="${type.getId()}"
+                th:text="${type.getName()}">
+        </option>
+      </select>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Подтвердить</button>
+  </form>
   <table class="table table-hover" id="sortTable">
     <thead>
     <tr>

@@ -1,6 +1,7 @@
 package com.example.timofei.controller;
 
 import com.example.timofei.entity.*;
+import com.example.timofei.repository.FuelUsageRepo;
 import com.example.timofei.service.DriverService;
 import com.example.timofei.service.FuelService;
 import com.example.timofei.service.RouteListService;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.sql.Date;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,6 +33,8 @@ public class FuelController {
     private final DriverService driverService;
 
     private final RouteListService routeListService;
+
+    private final FuelUsageRepo fuelUsageRepo;
 
     @GetMapping("/fuel")
     public String getFuelMenu(Model model){
@@ -67,6 +72,7 @@ public class FuelController {
     @GetMapping("/fuel/usage")
     public String getFuelUsage(Model model){
         model.addAttribute("usages",fuelService.findAllUsages());
+        model.addAttribute("Drivers", driverService.findAll());
         return "fuelCRUD/fuelUsage/fuelUsage";
     }
     @GetMapping("/fuel/usage/edit")
@@ -91,6 +97,16 @@ public class FuelController {
         model.addAttribute("Drivers", driverService.findAll());
         model.addAttribute("Routes", routeListService.findAll());
         return "fuelCRUD/fuelUsage/edit";
+    }
+    @PostMapping("/fuel/usage/between")
+    public String findFuelUsageByDriver(Model model, @RequestParam(name="start", required = true) Date start,
+                                        @RequestParam(name="end", required = true) Date end,
+                                        @RequestParam(name="driver", required = true) Long id){
+        System.out.println(id);
+        model.addAttribute("usages",fuelUsageRepo.findFuelUsagesByUsagedateBetween(start,end)
+                .stream().filter(x->x.getDriver().getId()==id).collect(Collectors.toList()));
+        model.addAttribute("Drivers", driverService.findAll());
+        return "fuelCRUD/fuelUsage/fuelUsage";
     }
     @PostMapping("/fuel/usage/edit/accept")
     public String editUsageAccept(Model model, @ModelAttribute("FuelUsage") FuelUsage fuelUsage)
