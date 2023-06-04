@@ -55,7 +55,7 @@
     Путевой лист
     <select th:field="*{routeList}" id="floatingInput" class="form-control">
       <option th:each="type : ${Routes}"
-              th:value="${type.getId()}"
+              th:value="${type}"
               th:text="${'Путевой лист ' + type.getId()}">
       </option>
     </select>
